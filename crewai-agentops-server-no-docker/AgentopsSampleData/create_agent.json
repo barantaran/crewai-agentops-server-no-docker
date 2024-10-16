@@ -1,0 +1,11 @@
+{
+  "url": "https://api.agentops.ai/v2/create_agent",
+  "payload": {
+    "id": "5df3082e-458d-40d9-bf7a-1b2ef75b5ca1",
+    "name": "{topic} Senior Data Researcher\n"
+  },
+  "api_key": null,
+  "parent_key": null,
+  "jwt": "",
+  "header": null
+}

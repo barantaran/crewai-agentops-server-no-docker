@@ -1,0 +1,86 @@
+{
+  "url": "https://api.agentops.ai/v2/create_events",
+  "payload": {
+    "events": [
+      {
+        "event_type": "llms",
+        "params": {
+          "model": "gpt-4o-mini",
+          "messages": [
+            {
+              "role": "system",
+              "content": "You are AI LLMs Senior Data Researcher. You're a seasoned researcher. Your personal goal is: Uncover cutting-edge developments in AI LLMs.\n\nTo give my best complete final answer to the task use the exact following format:\n\nThought: I now can give a great answer\nFinal Answer: Your final answer must be the great and the most complete as possible, it must be outcome described.\n\nI MUST use these formats, my job depends on it!"
+            },
+            {
+              "role": "user",
+              "content": "\nCurrent Task: Conduct a thorough research about AI LLMs\n\nThis is the expected criteria for your final answer: A list with 1 bullet point of the most relevant information about AI LLMs\n\nyou MUST return the actual complete content as the final answer, not a summary.\n\nBegin! This is VERY important to you, use the tools available and give your best Final Answer, your job depends on it!\n\nThought:"
+            }
+          ],
+          "stop": [
+            "\nObservation:"
+          ],
+          "api_key": "",
+          "stream": false
+        },
+        "returns": {
+          "id": "chatcmpl-AITUpgkasEM3CtsdFpCZTDCHGsBCa",
+          "choices": [
+            {
+              "finish_reason": "stop",
+              "index": 0,
+              "message": {
+                "content": "I now can give a great answer\nFinal Answer: - The most relevant information about AI LLMs (Large Language Models) is that they are increasingly leveraging transformer architectures, which enable highly parallelized training on vast datasets, leading to substantial improvements in natural language understanding and generation. The development of models such as GPT-3 and its successors exemplifies the ability to perform a wide range of tasks, from text completion to translation, by utilizing fine-tuning techniques and prompt engineering, allowing them to adapt to specific applications with minimal additional training, thus revolutionizing fields such as content creation, customer support, and programming assistance.",
+                "role": "assistant",
+                "tool_calls": null,
+                "function_call": null
+              }
+            }
+          ],
+          "created": 1728966651,
+          "model": "gpt-4o-mini-2024-07-18",
+          "object": "chat.completion",
+          "system_fingerprint": "fp_4552ec53e1",
+          "usage": {
+            "completion_tokens": 124,
+            "prompt_tokens": 191,
+            "total_tokens": 315,
+            "completion_tokens_details": {
+              "audio_tokens": null,
+              "reasoning_tokens": 0
+            },
+            "prompt_tokens_details": {
+              "audio_tokens": null,
+              "cached_tokens": 0
+            }
+          },
+          "service_tier": null
+        },
+        "init_timestamp": "2024-10-15T04:30:49.824601+00:00",
+        "end_timestamp": "2024-10-15T04:30:54.337487+00:00",
+        "agent_id": "5df3082e-458d-40d9-bf7a-1b2ef75b5ca1",
+        "id": "226e1aae-193d-4452-992f-f639bfa27b87",
+        "prompt": [
+          {
+            "role": "system",
+            "content": "You are AI LLMs Senior Data Researcher. You're a seasoned researcher. Your personal goal is: Uncover cutting-edge developments in AI LLMs.\n\nTo give my best complete final answer to the task use the exact following format:\n\nThought: I now can give a great answer\nFinal Answer: Your final answer must be the great and the most complete as possible, it must be outcome described.\n\nI MUST use these formats, my job depends on it!"
+          },
+          {
+            "role": "user",
+            "content": "\nCurrent Task: Conduct a thorough research about AI LLMs\n\nThis is the expected criteria for your final answer: A list with 1 bullet point of the most relevant information about AI LLMs\n\nyou MUST return the actual complete content as the final answer, not a summary.\n\nBegin! This is VERY important to you, use the tools available and give your best Final Answer, your job depends on it!\n\nThought:"
+          }
+        ],
+        "prompt_tokens": 191,
+        "completion": {
+          "content": "I now can give a great answer\nFinal Answer: - The most relevant information about AI LLMs (Large Language Models) is that they are increasingly leveraging transformer architectures, which enable highly parallelized training on vast datasets, leading to substantial improvements in natural language understanding and generation. The development of models such as GPT-3 and its successors exemplifies the ability to perform a wide range of tasks, from text completion to translation, by utilizing fine-tuning techniques and prompt engineering, allowing them to adapt to specific applications with minimal additional training, thus revolutionizing fields such as content creation, customer support, and programming assistance.",
+          "role": "assistant"
+        },
+        "completion_tokens": 124,
+        "model": "gpt-4o-mini-2024-07-18"
+      }
+    ]
+  },
+  "api_key": null,
+  "parent_key": null,
+  "jwt": "",
+  "header": null
+}
