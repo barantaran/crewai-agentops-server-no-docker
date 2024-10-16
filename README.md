@@ -1,1 +1,1 @@
-# crewai-agentops-server-no-docker
+# Agentops Server Project
