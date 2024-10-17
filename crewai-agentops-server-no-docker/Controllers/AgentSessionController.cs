@@ -6,12 +6,12 @@ namespace AgentopsServer.Controllers
 {
     [ApiController]
     [Route("V1")]
-    public class SessionController : ControllerBase
+    public class AgentSessionController : ControllerBase
     {
-        private readonly ILogger<SessionController> _logger;
+        private readonly ILogger<AgentSessionController> _logger;
         private readonly AgentServerDbContext _context;
 
-        public SessionController(ILogger<SessionController> logger, AgentServerDbContext context)
+        public AgentSessionController(ILogger<AgentSessionController> logger, AgentServerDbContext context)
         {
             _logger = logger;
             _context = context;
