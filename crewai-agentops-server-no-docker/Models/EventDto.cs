@@ -6,6 +6,7 @@
         public string? EventType { get; set; }
         public DateTime InitTimestamp { get; set; }
         public DateTime EndTimestamp { get; set; }
+        public List<PromptDto>? Prompt { get; set; }
         public int PromptTokens { get; set; }
         public int CompletionTokens { get; set; }
     }

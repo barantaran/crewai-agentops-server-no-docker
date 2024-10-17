@@ -11,5 +11,6 @@
         public DbSet<Agent> Agents { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<EventReturn> EventReturns { get; set; }
+        public DbSet<Prompt> Prompts { get; set; }
     }
 }

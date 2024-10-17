@@ -9,6 +9,7 @@
         public DateTime InitTimestamp { get; set; }
         public DateTime EndTimestamp { get; set; }
         public string? Model { get; set; }
+        public ICollection<Prompt> Prompts { get; set; }
         public int PromptTokens { get; set; }
         public int CompletionTokens { get; set; }
     }

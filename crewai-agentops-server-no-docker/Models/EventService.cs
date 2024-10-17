@@ -16,27 +16,40 @@ namespace AgentopsServer.Models
 
         public async Task<List<Event>> CreateEventsAsync(EventRequest eventRequest)
         {
-            var newEvents = new List<Event>();
+            var createdEvents = new List<Event>();
 
-            foreach (var ev in eventRequest.Events)
+            foreach (var eventData in eventRequest.Events)
             {
+                // Create Event object
                 var newEvent = new Event
                 {
-                    AgentExtGuid = ev.AgentId,
-                    EventType = ev.EventType,
-                    InitTimestamp = ev.InitTimestamp,
-                    EndTimestamp = ev.EndTimestamp,
-                    PromptTokens = ev.PromptTokens,
-                    CompletionTokens = ev.CompletionTokens,
+                    EventType = eventData.EventType,
+                    // Add other event fields here
                 };
 
-                newEvents.Add(newEvent);
+                // Save event to get the EventId
+                _context.Events.Add(newEvent);
+                await _context.SaveChangesAsync();
+
+                // Now store the associated prompts
+                foreach (var prompt in eventData.Prompt)
+                {
+                    var newPrompt = new Prompt
+                    {
+                        Role = prompt.Role,
+                        Content = prompt.Content,
+                        EventId = newEvent.EventId
+                    };
+
+                    _context.Prompts.Add(newPrompt);
+                }
+
+                await _context.SaveChangesAsync();
+
+                createdEvents.Add(newEvent);
             }
 
-            _context.Events.AddRange(newEvents);
-            await _context.SaveChangesAsync();
-
-            return newEvents;
+            return createdEvents;
         }
     }
 }

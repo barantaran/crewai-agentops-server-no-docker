@@ -24,11 +24,8 @@ namespace AgentopsServer.Migrations
 
             modelBuilder.Entity("AgentopsServer.Models.Agent", b =>
                 {
-                    b.Property<int>("AgentId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("AgentId"));
+                    b.Property<string>("AgentId")
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .HasColumnType("text");
@@ -68,20 +65,21 @@ namespace AgentopsServer.Migrations
 
             modelBuilder.Entity("AgentopsServer.Models.Event", b =>
                 {
-                    b.Property<int>("EventId")
+                    b.Property<Guid>("EventId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("uuid");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("EventId"));
-
-                    b.Property<int>("AgentId")
-                        .HasColumnType("integer");
+                    b.Property<string>("AgentExtGuid")
+                        .HasColumnType("text");
 
                     b.Property<int>("CompletionTokens")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("EndTimestamp")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("EventExtGuid")
+                        .HasColumnType("text");
 
                     b.Property<string>("EventType")
                         .HasColumnType("text");
@@ -120,6 +118,46 @@ namespace AgentopsServer.Migrations
                     b.HasKey("EventReturnId");
 
                     b.ToTable("EventReturns");
+                });
+
+            modelBuilder.Entity("AgentopsServer.Models.Prompt", b =>
+                {
+                    b.Property<int>("PromptId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("PromptId"));
+
+                    b.Property<string>("Content")
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("EventId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Role")
+                        .HasColumnType("text");
+
+                    b.HasKey("PromptId");
+
+                    b.HasIndex("EventId");
+
+                    b.ToTable("Prompts");
+                });
+
+            modelBuilder.Entity("AgentopsServer.Models.Prompt", b =>
+                {
+                    b.HasOne("AgentopsServer.Models.Event", "Event")
+                        .WithMany("Prompts")
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Event");
+                });
+
+            modelBuilder.Entity("AgentopsServer.Models.Event", b =>
+                {
+                    b.Navigation("Prompts");
                 });
 #pragma warning restore 612, 618
         }

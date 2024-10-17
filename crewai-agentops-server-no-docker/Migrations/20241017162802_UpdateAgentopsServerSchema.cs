@@ -16,8 +16,7 @@ namespace AgentopsServer.Migrations
                 name: "Agents",
                 columns: table => new
                 {
-                    AgentId = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    AgentId = table.Column<string>(type: "text", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
@@ -61,9 +60,9 @@ namespace AgentopsServer.Migrations
                 name: "Events",
                 columns: table => new
                 {
-                    EventId = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    AgentId = table.Column<int>(type: "integer", nullable: false),
+                    EventId = table.Column<Guid>(type: "uuid", nullable: false),
+                    EventExtGuid = table.Column<string>(type: "text", nullable: true),
+                    AgentExtGuid = table.Column<string>(type: "text", nullable: true),
                     EventType = table.Column<string>(type: "text", nullable: true),
                     InitTimestamp = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     EndTimestamp = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
@@ -75,6 +74,32 @@ namespace AgentopsServer.Migrations
                 {
                     table.PrimaryKey("PK_Events", x => x.EventId);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "Prompts",
+                columns: table => new
+                {
+                    PromptId = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Role = table.Column<string>(type: "text", nullable: true),
+                    Content = table.Column<string>(type: "text", nullable: true),
+                    EventId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Prompts", x => x.PromptId);
+                    table.ForeignKey(
+                        name: "FK_Prompts_Events_EventId",
+                        column: x => x.EventId,
+                        principalTable: "Events",
+                        principalColumn: "EventId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Prompts_EventId",
+                table: "Prompts",
+                column: "EventId");
         }
 
         /// <inheritdoc />
@@ -88,6 +113,9 @@ namespace AgentopsServer.Migrations
 
             migrationBuilder.DropTable(
                 name: "EventReturns");
+
+            migrationBuilder.DropTable(
+                name: "Prompts");
 
             migrationBuilder.DropTable(
                 name: "Events");
