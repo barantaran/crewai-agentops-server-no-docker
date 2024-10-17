@@ -16,11 +16,13 @@ namespace AgentopsServer.Controllers
     {
         private readonly ILogger<AgentSessionController> _logger;
         private readonly AgentServerDbContext _context;
+        private readonly EventService _eventService;
 
-        public EventsController(ILogger<AgentSessionController> logger, AgentServerDbContext context)
+        public EventsController(ILogger<AgentSessionController> logger, AgentServerDbContext context, EventService eventService)
         {
             _logger = logger;
             _context = context;
+            _eventService = eventService;
         }
 
         // GET: api/Events/5
@@ -44,16 +46,23 @@ namespace AgentopsServer.Controllers
         // POST: api/Events
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost("create_events")]
-        public async Task<ActionResult<Event>> PostEvent(Event @event)
+        public async Task<IActionResult> PostEvent([FromBody] EventRequest eventRequest)
         {
-          if (_context.Events == null)
-          {
-              return Problem("Entity set 'AgentServerDbContext.Events'  is null.");
-          }
-            _context.Events.Add(@event);
-            await _context.SaveChangesAsync();
+            if (eventRequest == null || eventRequest.Events == null || !eventRequest.Events.Any())
+            {
+                return BadRequest("Event data is required.");
+            }
 
-            return CreatedAtAction("GetEvent", new { id = @event.EventId }, @event);
+            try
+            {
+                var newEvents = await _eventService.CreateEventsAsync(eventRequest);
+                return StatusCode(StatusCodes.Status201Created);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed to create events: {ex.Message}");
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while creating the events.");
+            }
         }
     }
 }

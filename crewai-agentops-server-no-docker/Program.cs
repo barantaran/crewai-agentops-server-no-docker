@@ -1,4 +1,5 @@
 ﻿using AgentopsServer;
+using AgentopsServer.Models;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +11,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AgentServerDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddScoped<EventService>();
 
 var app = builder.Build();
 
