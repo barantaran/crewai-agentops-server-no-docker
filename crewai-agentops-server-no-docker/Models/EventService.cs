@@ -22,7 +22,7 @@ namespace AgentopsServer.Models
             {
                 var newEvent = new Event
                 {
-                    AgentId = ev.AgentId,
+                    AgentExtGuid = ev.AgentId,
                     EventType = ev.EventType,
                     InitTimestamp = ev.InitTimestamp,
                     EndTimestamp = ev.EndTimestamp,

@@ -2,8 +2,9 @@
 {
     public class Event
     {
-        public string? EventId { get; set; }
-        public string? AgentId { get; set; }
+        public Guid EventId { get; set; }
+        public string? EventExtGuid { get; set; }
+        public string? AgentExtGuid { get; set; }
         public string? EventType { get; set; }
         public DateTime InitTimestamp { get; set; }
         public DateTime EndTimestamp { get; set; }
