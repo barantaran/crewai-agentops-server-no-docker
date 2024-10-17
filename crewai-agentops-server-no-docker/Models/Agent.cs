@@ -2,7 +2,7 @@
 {
     public class Agent
     {
-        public int AgentId { get; set; }
+        public string? AgentId { get; set; }
         public string? Name { get; set; }
     }
 }

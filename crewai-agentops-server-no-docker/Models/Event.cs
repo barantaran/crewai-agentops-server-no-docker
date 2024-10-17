@@ -2,8 +2,8 @@
 {
     public class Event
     {
-        public int EventId { get; set; }
-        public int AgentId { get; set; }
+        public string? EventId { get; set; }
+        public string? AgentId { get; set; }
         public string? EventType { get; set; }
         public DateTime InitTimestamp { get; set; }
         public DateTime EndTimestamp { get; set; }

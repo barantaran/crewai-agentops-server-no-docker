@@ -38,8 +38,8 @@ namespace AgentopsServer.Controllers
                 ClearDatabase(context);
                 context.Agents.AddRange(new List<Agent>
             {
-                new Agent { AgentId = 1, Name = "Agent 1" },
-                new Agent { AgentId = 2, Name = "Agent 2" }
+                new Agent { AgentId = "1", Name = "Agent 1" },
+                new Agent { AgentId = "2", Name = "Agent 2" }
             });
                 context.SaveChanges();
 
@@ -61,7 +61,7 @@ namespace AgentopsServer.Controllers
             // Arrange
             using (var context = new AgentServerDbContext(_dbContextOptions))
             {
-                context.Agents.Add(new Agent { AgentId = 1, Name = "Agent 1" });
+                context.Agents.Add(new Agent { AgentId = "1", Name = "Agent 1" });
                 context.SaveChanges();
 
                 var controller = new AgentsController(_mockLogger.Object, context);
@@ -108,7 +108,7 @@ namespace AgentopsServer.Controllers
                 var createdResult = Assert.IsType<CreatedAtActionResult>(result.Result);
                 var returnValue = Assert.IsType<Agent>(createdResult.Value);
                 Assert.Equal("New Agent", returnValue.Name);
-                Assert.NotEqual(0, returnValue.AgentId); // Id should be generated
+                Assert.NotEqual("", returnValue.AgentId); // Id should be generated
             }
         }
     }
