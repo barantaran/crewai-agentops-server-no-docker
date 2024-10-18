@@ -1,6 +1,6 @@
 ﻿namespace AgentopsServer.Models
 {
-    using System.Text.Json.Serialization;
+    using Newtonsoft.Json;
 
     public class Params
     {

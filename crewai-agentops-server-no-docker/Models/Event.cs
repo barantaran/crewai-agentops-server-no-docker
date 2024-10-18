@@ -7,6 +7,7 @@
         public Guid EventId { get; set; }
         public string? EventType { get; set; }
         public Params? Params { get; set; }
+        public Return? Returns { get; set; }
         public DateTime InitTimestamp { get; set; }
         public DateTime EndTimestamp { get; set; }
 

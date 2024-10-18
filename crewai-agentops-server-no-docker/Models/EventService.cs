@@ -48,8 +48,12 @@ namespace AgentopsServer.Models
                     Stream = eventData.Params.Stream,
                     EventId = newEvent.EventId
                 };
-
                 _context.Params.Add(newParams);
+                
+                var newReturns = new Return {
+                    ReturnExternalId = eventData.Returns.ReturnExternalId
+                };
+                
 
                 await _context.SaveChangesAsync();
 
