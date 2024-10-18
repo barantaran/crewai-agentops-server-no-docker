@@ -15,5 +15,6 @@
         public DbSet<Param> Params { get; set; }
         public DbSet<Choice> Choices { get; set; }
         public DbSet<Message> Messages { get; set; }
+        public DbSet<Completion> Completions { get; set; }
     }
 }

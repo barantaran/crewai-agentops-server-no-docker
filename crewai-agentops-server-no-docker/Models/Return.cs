@@ -9,6 +9,7 @@
 
         [JsonProperty("id")]
         public string? ReturnExternalId { get; set; }
+        public ICollection<Choice>? Choices { get; set; }
         public int Created { get; set; }
         public string? Model { get; set; }
         public string? Object { get; set; }

@@ -18,6 +18,7 @@
         public string? EventExtGuid { get; set; }
         public ICollection<Prompt>? Prompt { get; set; }
         public int PromptTokens { get; set; }
+        public Completion Completion { get; set; }
         public int CompletionTokens { get; set; }
         public string? Model { get; set; }
     }

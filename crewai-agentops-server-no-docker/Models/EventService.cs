@@ -20,16 +20,84 @@ namespace AgentopsServer.Models
 
             foreach (var eventData in eventRequest.Events)
             {
+                /* Save Event */
                 var newEvent = new Event
                 {
                     EventType = eventData.EventType,
+                    InitTimestamp = eventData.InitTimestamp,
+                    EndTimestamp = eventData.EndTimestamp,
+                    AgentExtGuid = eventData.AgentExtGuid,
+                    EventExtGuid = eventData.EventExtGuid,
+                    PromptTokens = eventData.PromptTokens,
+                    CompletionTokens = eventData.CompletionTokens,
+                    Model = eventData.Model
                 };
 
-                // Save event to get the EventId
                 _context.Events.Add(newEvent);
                 await _context.SaveChangesAsync();
 
-                // Now store the associated prompts
+                /* Save Param */
+                var newParams = new Param
+                {
+                    Model = eventData.Params.Model,
+                    Stream = eventData.Params.Stream,
+                    EventId = newEvent.EventId
+                };
+                _context.Params.Add(newParams);
+
+                #region Save Event.Returns
+                var newReturns = new Return {
+                    ReturnExternalId = eventData.Returns.ReturnExternalId,
+                    Created = eventData.Returns.Created,
+                    Model = eventData.Returns.Model,
+                    Object = eventData.Returns.Object,
+                    ServiceTier = eventData.Returns.ServiceTier,
+                    EventId = newEvent.EventId,
+                };
+                _context.Returns.Add(newReturns);
+                await _context.SaveChangesAsync();
+
+                /* Save Event.Returns.Choices */
+                foreach (var choice in eventData.Returns.Choices)
+                {
+                    var newChoice = new Choice
+                    {
+                        FinishReason = choice.FinishReason,
+                        Index = choice.Index,
+                        ReturnId = newReturns.ReturnId
+                    };
+
+                    _context.Choices.Add(newChoice);
+                    await _context.SaveChangesAsync();
+
+                    var newMessage = new Message
+                    {
+                        Content = choice.Message.Content,
+                        Role = choice.Message.Role,
+                        ToolCalls = choice.Message.ToolCalls,
+                        FunctionCall = choice.Message.FunctionCall,
+                        ChoiseId = newChoice.ChoiceId
+                    };
+                    _context.Messages.Add(newMessage);
+                }
+                /* End Save Event.Returns.Choices */
+
+                /* Save Event.Returns.Usage */
+                var newUsage = new Usage
+                {
+                    CompletionTokens = eventData.Returns.Usage.CompletionTokens,
+                    PromptTokens = eventData.Returns.Usage.PromptTokens,
+                    TotalTokens = eventData.Returns.Usage.TotalTokens,
+                    ReasoningTokens = eventData.Returns.Usage.ReasoningTokens,
+                    CachedTokens = eventData.Returns.Usage.CachedTokens,
+                    ReturnId = newReturns.ReturnId
+                };
+                _context.Add(newUsage);
+                /* End Save Event.Returns.Usage */
+
+                #endregion
+
+                #region Save Event.Propmpt
                 foreach (var prompt in eventData.Prompt)
                 {
                     var newPrompt = new Prompt
@@ -41,19 +109,17 @@ namespace AgentopsServer.Models
 
                     _context.Prompts.Add(newPrompt);
                 }
+                #endregion
 
-                var newParams = new Param
+                /* Save Event.Completion */
+                var newCompletion = new Completion
                 {
-                    Model = eventData.Params.Model,
-                    Stream = eventData.Params.Stream,
+                    Content = eventData.Completion.Content,
+                    Role = eventData.Completion.Role,
                     EventId = newEvent.EventId
                 };
-                _context.Params.Add(newParams);
-                
-                var newReturns = new Return {
-                    ReturnExternalId = eventData.Returns.ReturnExternalId
-                };
-                
+                _context.Completions.Add(newCompletion);
+                /* End Save Event.Completion */
 
                 await _context.SaveChangesAsync();
 
