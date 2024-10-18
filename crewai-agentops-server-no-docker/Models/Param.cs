@@ -2,10 +2,10 @@
 {
     using Newtonsoft.Json;
 
-    public class Params
+    public class Param
     {
         [JsonIgnore]
-        public int ParamsId { get; set; }
+        public int ParamId { get; set; }
         public string? Model { get; set; }
         public Boolean Stream { get; set; }
 

@@ -42,7 +42,7 @@ namespace AgentopsServer.Models
                     _context.Prompts.Add(newPrompt);
                 }
 
-                var newParams = new Params
+                var newParams = new Param
                 {
                     Model = eventData.Params.Model,
                     Stream = eventData.Params.Stream,

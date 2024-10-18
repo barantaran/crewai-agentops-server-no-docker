@@ -13,7 +13,7 @@
         public DbSet<EventReturn> EventReturns { get; set; }
         public DbSet<Prompt> Prompts { get; set; }
         public DbSet<Return> Returns { get; set; }
-        public DbSet<Params> Params { get; set; }
+        public DbSet<Param> Params { get; set; }
         public DbSet<Choice> Choices { get; set; }
         public DbSet<Message> Messages { get; set; }
     }
