@@ -20,11 +20,9 @@ namespace AgentopsServer.Models
 
             foreach (var eventData in eventRequest.Events)
             {
-                // Create Event object
                 var newEvent = new Event
                 {
                     EventType = eventData.EventType,
-                    // Add other event fields here
                 };
 
                 // Save event to get the EventId
@@ -43,6 +41,15 @@ namespace AgentopsServer.Models
 
                     _context.Prompts.Add(newPrompt);
                 }
+
+                var newParams = new Params
+                {
+                    Model = eventData.Params.Model,
+                    Stream = eventData.Params.Stream,
+                    EventId = newEvent.EventId
+                };
+
+                _context.Params.Add(newParams);
 
                 await _context.SaveChangesAsync();
 

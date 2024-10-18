@@ -1,10 +1,20 @@
 ﻿using AgentopsServer;
 using AgentopsServer.Models;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Serialization;
+using Swashbuckle.AspNetCore.Newtonsoft;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddNewtonsoftJson(options =>
+{
+    // Use SnakeCaseNamingStrategy for JSON
+    options.SerializerSettings.ContractResolver = new DefaultContractResolver
+    {
+        NamingStrategy = new SnakeCaseNamingStrategy()
+    };
+});
+builder.Services.AddSwaggerGenNewtonsoftSupport();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

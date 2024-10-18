@@ -120,6 +120,33 @@ namespace AgentopsServer.Migrations
                     b.ToTable("EventReturns");
                 });
 
+            modelBuilder.Entity("AgentopsServer.Models.Params", b =>
+                {
+                    b.Property<int>("ParamsId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ParamsId"));
+
+                    b.Property<Guid?>("EventId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Model")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Stop")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("Stream")
+                        .HasColumnType("boolean");
+
+                    b.HasKey("ParamsId");
+
+                    b.HasIndex("EventId");
+
+                    b.ToTable("Params");
+                });
+
             modelBuilder.Entity("AgentopsServer.Models.Prompt", b =>
                 {
                     b.Property<int>("PromptId")
@@ -144,6 +171,15 @@ namespace AgentopsServer.Migrations
                     b.ToTable("Prompts");
                 });
 
+            modelBuilder.Entity("AgentopsServer.Models.Params", b =>
+                {
+                    b.HasOne("AgentopsServer.Models.Event", "Event")
+                        .WithMany("Params")
+                        .HasForeignKey("EventId");
+
+                    b.Navigation("Event");
+                });
+
             modelBuilder.Entity("AgentopsServer.Models.Prompt", b =>
                 {
                     b.HasOne("AgentopsServer.Models.Event", "Event")
@@ -157,6 +193,8 @@ namespace AgentopsServer.Migrations
 
             modelBuilder.Entity("AgentopsServer.Models.Event", b =>
                 {
+                    b.Navigation("Params");
+
                     b.Navigation("Prompts");
                 });
 #pragma warning restore 612, 618

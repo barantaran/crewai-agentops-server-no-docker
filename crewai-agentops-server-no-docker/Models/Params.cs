@@ -2,13 +2,13 @@
 {
     using System.Text.Json.Serialization;
 
-    public class Prompt
+    public class Params
     {
         [JsonIgnore]
-        public int PromptId { get; set; }
-        public string? Role { get; set; }
-        public string? Content { get; set; }
-        
+        public int ParamsId { get; set; }
+        public string? Model { get; set; }
+        public Boolean Stream { get; set; }
+
         [JsonIgnore]
         public Guid EventId { get; set; }
     }
