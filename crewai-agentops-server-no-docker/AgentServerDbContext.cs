@@ -10,7 +10,6 @@
         public DbSet<AgentSession> AgentSessions { get; set; }
         public DbSet<Agent> Agents { get; set; }
         public DbSet<Event> Events { get; set; }
-        public DbSet<EventReturn> EventReturns { get; set; }
         public DbSet<Prompt> Prompts { get; set; }
         public DbSet<Return> Returns { get; set; }
         public DbSet<Param> Params { get; set; }
